@@ -53,7 +53,11 @@ func (i *itemController) Update(ctx *gin.Context) {
 		id, _ := strconv.ParseInt(ctx.Param("id"), 0, 0)
 		item.Id = id
 
-		if item.Author.Email != currentUserEmail {
+		originalItem := itemService.FindById(id)
+		utility.Log(zap.DebugLevel, originalItem.Author.Email)
+		utility.Log(zap.DebugLevel, currentUserEmail)
+
+		if originalItem.Author.Email != currentUserEmail {
 			ctx.JSON(http.StatusUnauthorized, nil)
 			return
 		}

@@ -39,7 +39,7 @@ func (d database) FindAll() []entity.Item {
 
 func (d database) FindById(id int64) entity.Item {
 	var item entity.Item
-	utility.DB.Where("id =?", id).First(&item)
+	utility.DB.Preload("Author").Where("id =?", id).First(&item)
 	return item
 }
 
